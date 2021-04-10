@@ -1,9 +1,39 @@
 {% extends 'base.html' %}
 
 {% block head %}
-
+<style>
+    ul
+    {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+</style>
 {%endblock%}
 
 {%block body%}
 <h1>Buy Tab</h1>
+
+<!-- <input type="text" id="searchBar" onkeyup="searchProducts()" placeholder="Search Concept">
+<ul id="list">
+  <li class = 'products'>abProduct1</li>
+  <li class = 'products'>bcProduct2</li>
+  <li class = 'products'>cdProduct3</li>
+  <li class = 'products'>deProduct4</li>
+  <li class = 'products'>efProduct5</li>
+</ul> ^ used for search testing-->
+
+<select id = "productList" onchange="dropDown()">
+    <option>Any</option>
+    <option>Electronics</option>
+    <option>Furniture</option>
+    <option>Books</option>
+    <option>Sports Gear</option>
+    <option>Clothing</option>
+</select>
+
+<input type = "text" id = "choice" placeholder="Search Products"
+onkeydown="display(event)">
+
+<a href="/"><input type="button" value="Back"></a>
 {%endblock%}
