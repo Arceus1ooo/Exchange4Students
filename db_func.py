@@ -53,12 +53,17 @@ def post(prod):
 
 
 def pull(typ, keyword):
-    
-    if typ != '':
-        result = db.Listings.find({'Type' : typ})
-    elif keyword != '':
+    if typ == 'Any' and keyword != '':
         result = db.Listings.find({'Description' : 
                                    {'$regex' : keyword, '$options' : 'i'}})
+    elif typ == 'Any' and keyword == '':
+        result = db.Listings.find({})
+    elif typ != '' and typ != 'Any' and keyword != '':
+        result = db.Listings.find({'Type' : typ, 'Description' : 
+                                   {'$regex' : keyword, '$options' : 'i'}})
+    elif typ != '' and keyword == '':
+        result = db.Listings.find({'Type' : typ})
+        
     
     return result
 
