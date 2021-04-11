@@ -17,6 +17,14 @@ def displayBuyerTab():
 def displaySellerTab():
     return render_template('sellerTab.html')
 
+@app.route('/view-item')
+def displayItem():
+    return render_template('viewItem.html')
+
+@app.route('/post-item')
+def displayPost():
+    return render_template('postItem.html')
+
 
 
 if __name__ == '__main__':
