@@ -14,6 +14,7 @@
 {%block body%}
 <h1>Buy Tab</h1>
 
+<form method="POST" action = "/itemlist">
 <!-- <input type="text" id="searchBar" onkeyup="searchProducts()" placeholder="Search Concept">
 <ul id="list">
   <li class = 'products'>abProduct1</li>
@@ -23,17 +24,20 @@
   <li class = 'products'>efProduct5</li>
 </ul> ^ used for search testing-->
 
-<select id = "productList" onchange="dropDown()">
-    <option>Any</option>
-    <option>Electronics</option>
-    <option>Furniture</option>
-    <option>Books</option>
-    <option>Sports Gear</option>
-    <option>Clothing</option>
+
+<select id = "productList" onchange="dropDown()" name = "type">
+    <option value = "Any">Any</option>
+    <option value = "Electronic">Electronics</option>
+    <option value = "Furniture">Furniture</option>
+    <option value = "Book">Book</option>
+    <option value = "Sports Gear">Sports Gear</option>
+    <option value = "Clothing">Clothing</option>
 </select>
 
-<input type = "text" id = "choice" placeholder="Search Products"
+<input type = "text" id = "choice" name = "choice" placeholder="Search Products"
 onkeydown="display(event)">
+<button type ="submit">Submit</button>
+</form>
 
 <a href="/"><input type="button" value="Back"></a>
 {%endblock%}
