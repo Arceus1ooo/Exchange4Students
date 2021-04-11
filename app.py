@@ -33,6 +33,5 @@ def displayListings():
     return li[0]['Name']
 
 
-
 if __name__ == '__main__':
     app.run(debug=True)
