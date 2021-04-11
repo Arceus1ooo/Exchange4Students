@@ -27,10 +27,14 @@ def displayListings():
         typ = request.form['type']
         keyword = request.form['choice']
     res = db_func.pull(typ, keyword)
-    li = []
+    lst = []
     for x in res:
-        li.append(x)
-    return li[0]['Name']
+        lst.append(x)
+    return render_template('itemList.html', lst = lst)
+
+@app.route('/itemList/<string:name>', methods = ['GET', 'POST'])
+def displayItem(name):
+    return 'works'
 
 
 
