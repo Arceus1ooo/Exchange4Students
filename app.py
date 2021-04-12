@@ -32,9 +32,10 @@ def displayListings():
         lst.append(x)
     return render_template('itemList.html', lst = lst)
 
-@app.route('/itemList/<string:name>', methods = ['GET', 'POST'])
-def displayItem(name):
-    return 'works'
+@app.route('/itemList/<string:_id>', methods = ['GET', 'POST'])
+def displayItem(_id):
+    item = db_func.pullID(_id)
+    return render_template('itemView.html', item = item)
 
 @app.route('/sell/post')
 def postItem():

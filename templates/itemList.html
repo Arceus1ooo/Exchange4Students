@@ -18,7 +18,7 @@
 <p>
 <br>
 <br>
-&emsp;<a href = '{{ url_for('displayItem', name = item['Name'])}}'>{{item['Name']}}</a>
+&emsp;<a href = '{{ url_for('displayItem', _id = item['_id'])}}'>{{item['Name']}}</a>
 &emsp;&emsp;&emsp;&emsp; Price: ${{item['Price']}}<br>
 &emsp;Description: {{item['Description']}}<br>
 &emsp;Type of Product: {{item['Type']}}
@@ -28,6 +28,6 @@
 </p>
 {% endfor %}
 
-
+<a href="/buy"><input type="button" value="Return to Buyer Tab"></a>
 
 {%endblock%}

@@ -1,5 +1,6 @@
 import pymongo
 import classes
+import bson
 
 client = pymongo.MongoClient("mongodb+srv://dbAdmin:dbAdminPASS@cluster0.ih0la.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 db = client.Exchange4Students
@@ -71,6 +72,10 @@ def pull(typ, keyword):
         result = db.Listings.find({})    
     
     return result
+
+def pullID(itemID):
+    '''returns item with specific itemID'''
+    return db.Listings.find({'_id': bson.ObjectId(oid=str(itemID))})
 
 
 client.close()
