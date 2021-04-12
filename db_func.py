@@ -63,7 +63,12 @@ def pull(typ, keyword):
                                    {'$regex' : keyword, '$options' : 'i'}})
     elif typ != '' and keyword == '':
         result = db.Listings.find({'Type' : typ})
-        
+
+    L = []
+    for i in result:
+        L.append(i)
+    if L == []:
+        result = db.Listings.find({})    
     
     return result
 

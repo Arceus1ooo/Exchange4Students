@@ -36,6 +36,10 @@ def displayListings():
 def displayItem(name):
     return 'works'
 
+@app.route('/sell/post')
+def postItem():
+    return render_template('postItem.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
