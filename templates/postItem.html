@@ -12,10 +12,10 @@
 {%endblock%}
 
 {%block body%}
-<h1>Create a Listing</h1>
+<h1 class = "indent">Create a Listing</h1>
 
 
-<form class = "content" method="POST" action="/sell/post/confirmation">
+<form method="POST" action="/sell/post/confirmation">
 &emsp; Confirm Product Type: <input type="text" id="prodTyp" name="prodTyp">
 <br>
 <br>
@@ -92,7 +92,8 @@
 
 <button type="submit">Submit to Marketplace</button>
 </form>
-
+<br>
+<br>
 &emsp;<a href="/sell"><input type="button" value="Return to Seller Tab"></a>
 
 {%endblock%}
