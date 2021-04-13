@@ -1,9 +1,98 @@
 {% extends 'base.html' %}
 
 {% block head %}
-
+<style>
+    ul
+    {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+</style>
 {%endblock%}
 
 {%block body%}
+<h1>Create a Listing</h1>
+
+
+<form method="POST" action="/sell/post/confirmation">
+&emsp; Confirm Product Type: <input type="text" id="prodTyp" name="prodTyp">
+<br>
+<br>
+&emsp;Enter Product Name: <input type="text" id="name" name="name">
+<br>
+<br>
+&emsp;Enter Product Description: <input type="text" id="desc" name="desc">
+<br>
+<br>
+&emsp;Enter Product Price: <input type="text" id="price" name="price">
+<br>
+<br>
+{% if typ == "Book" %}
+    &emsp;Enter Title: <input type="text" id="title" name="title">
+    <br>
+    <br>
+    &emsp;Enter Edition: <input type="text" id="ed" name="ed">
+    <br>
+    <br>
+    &emsp;Enter Course: <input type="text" id="course" name="course">
+    <br>
+    <br>
+{% elif typ == "Sports Gear" %}
+    &emsp;Enter Type: <input type="text" id="kind" name="kind">
+    <br>
+    <br>
+    &emsp;Enter Weight: <input type="text" id="weight" name="weight">
+    <br>
+    <br>
+{% elif typ == "Clothing" %}
+    &emsp;Enter Type: <input type="text" id="type" name="type">
+    <br>
+    <br>
+    &emsp;Enter Color: <input type="text" id="color" name="color">
+    <br>
+    <br>
+    &emsp;Enter Size: <input type="text" id="sz" name="sz">
+    <br>
+    <br>
+{% elif typ == "Electronic" %}
+    &emsp;Enter Type: <input type="text" id="type" name="type">
+    <br>
+    <br>
+    &emsp;Enter Model: <input type="text" id="model" name="model">
+    <br>
+    <br>
+    &emsp;Enter Dimensions:<br>
+    &emsp;Length: <input type="text" id="l" name="l"><br>
+    &emsp;Width: <input type="text" id="w" name="w"><br>
+    &emsp;Height: <input type="text" id="h" name="h">
+    <br>
+    <br>
+    &emsp;Enter Weight: <input type="text" id="weight" name="weight">
+    <br>
+    <br>
+{% elif typ == "Furntiture" %}
+    &emsp;Enter Type: <input type="text" id="type" name="type">
+    <br>
+    <br>
+    &emsp;Enter Color: <input type="text" id="color" name="color">
+    <br>
+    <br>
+    &emsp;Enter Dimensions:<br>
+    &emsp;Length: <input type="text" id="l" name="l"><br>
+    &emsp;Width: <input type="text" id="w" name="w"><br>
+    &emsp;Height: <input type="text" id="h" name="h">
+    <br>
+    <br>
+    &emsp;Enter Weight: <input type="text" id="weight" name="weight">
+    <br>
+    <br>
+
+{% endif %}
+
+<button type="submit">Submit to Marketplace</button>
+</form>
+
+&emsp;<a href="/sell"><input type="button" value="Return to Seller Tab"></a>
 
 {%endblock%}

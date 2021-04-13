@@ -9,7 +9,19 @@
 
 <!--<input type = "text" id = "choice" placeholder="Search Your Products"
 onkeydown="display(event)"> -->
-<a href="/sell/post"><input type="button" value="Post an item to the Marketplace"></a>
-
-<a href="/"><input type="button" value="Return to Marketplace"></a>
+<br>
+<br>
+<form method= "POST" action="/sell/post">
+&emsp;Select a Type of product to post:
+<select id = "sellerProductList" onchange="dropDown()" name= "type">
+    <option value = "Furniture">Furniture</option>
+    <option value = "Book">Book</option>
+    <option value = "Sports Gear">Sports Gear</option>
+    <option value = "Clothing">Clothing</option>
+    <option value = "Electronic">Electronics</option>
+</select>
+<button type="submit">Post item to the Marketplace</button>
+</form>
+<br>
+&emsp;<a href="/"><input type="button" value="Return to Marketplace"></a>
 {%endblock%}

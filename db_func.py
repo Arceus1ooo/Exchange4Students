@@ -10,43 +10,40 @@ def post(prod):
     item = {"Name" : prod.name,
             "Price" : prod.price,
             "Description" : prod.desc,
-            "Type" : "",
+            "Type" : prod.prodTyp,
             "Product Details" : {}}
     
-    if hasattr(prod.typ, 'title'):
-        item['Type'] = "Book"
-        item['Product Details']['Title'] = prod.typ.title
-        item['Product Details']['Edition'] = prod.typ.ed
-        item['Product Details']['Course'] = prod.typ.course
+    if prod.prodTyp == "Book":
+        item['Product Details']['Title'] = prod.title
+        item['Product Details']['Edition'] = prod.ed
+        item['Product Details']['Course'] = prod.course
         
-    elif hasattr(prod.typ, 'size'):
-        item['Type'] = "Clothing"
-        item['Product Details']['Type'] = prod.typ.typ
-        item['Product Details']['Color'] = prod.typ.color
-        item['Product Details']['Size'] = prod.typ.size
+    elif prod.prodTyp == "Clothing":
+        item['Product Details']['Type'] = prod.typ
+        item['Product Details']['Color'] = prod.color
+        item['Product Details']['Size'] = prod.sz
         
-    elif hasattr(prod.typ, 'kind'):
-        item['Type'] = "Sports Gear"
-        item['Product Details']['Type'] = prod.typ.kind
-        item['Product Details']['Weight'] = prod.typ.weight
+    elif prod.prodTyp == "Sports Gear":
+        item['Product Details']['Type'] = prod.kind
+        item['Product Details']['Weight'] = prod.weight
         
-    elif hasattr(prod.typ, 'model'):
-        item['Type'] = "Electronic"
-        item['Product Details']['Type'] = prod.typ.typ
-        item['Product Details']['Model'] = prod.typ.mod
-        item['Product Details']['Dimensions']['Length'] = prod.typ.dim.l
-        item['Product Details']['Dimensions']['Width'] = prod.typ.dim.w
-        item['Product Details']['Dimensions']['Height'] = prod.typ.dim.h
-        item['Product Details']['Weight'] = prod.typ.weight
+    elif prod.prodTyp == "Electronic":
+        item['Product Details']['Type'] = prod.typ
+        item['Product Details']['Model'] = prod.mod
+        item['Product Details']['Dimensions'] = {}
+        item['Product Details']['Dimensions']['Length'] = prod.l
+        item['Product Details']['Dimensions']['Width'] = prod.w
+        item['Product Details']['Dimensions']['Height'] = prod.h
+        item['Product Details']['Weight'] = prod.weight
 
-    else:
-        item['Type'] = "Furniture"
-        item['Product Details']['Type'] = prod.typ.typ
-        item['Product Details']['Color'] = prod.typ.color
-        item['Product Details']['Dimensions']['Length'] = prod.typ.dim.l
-        item['Product Details']['Dimensions']['Width'] = prod.typ.dim.w
-        item['Product Details']['Dimensions']['Height'] = prod.typ.dim.h
-        item['Product Details']['Weight'] = prod.typ.weight
+    elif prod.prodType == "Furniture":
+        item['Product Details']['Type'] = prod.typ
+        item['Product Details']['Color'] = prod.color
+        item['Product Details']['Dimensions'] = {}
+        item['Product Details']['Dimensions']['Length'] = prod.l
+        item['Product Details']['Dimensions']['Width'] = prod.w
+        item['Product Details']['Dimensions']['Height'] = prod.h
+        item['Product Details']['Weight'] = prod.weight
     
     res = db.Listings.insert_one(item)
     return res
@@ -63,13 +60,7 @@ def pull(typ, keyword):
         result = db.Listings.find({'Type' : typ, 'Description' : 
                                    {'$regex' : keyword, '$options' : 'i'}})
     elif typ != '' and keyword == '':
-        result = db.Listings.find({'Type' : typ})
-
-    L = []
-    for i in result:
-        L.append(i)
-    if L == []:
-        result = db.Listings.find({})    
+        result = db.Listings.find({'Type' : typ}) 
     
     return result
 
