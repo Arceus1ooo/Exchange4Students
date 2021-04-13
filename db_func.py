@@ -36,7 +36,7 @@ def post(prod):
         item['Product Details']['Dimensions']['Height'] = prod.h
         item['Product Details']['Weight'] = prod.weight
 
-    elif prod.prodType == "Furniture":
+    elif prod.prodTyp == "Furniture":
         item['Product Details']['Type'] = prod.typ
         item['Product Details']['Color'] = prod.color
         item['Product Details']['Dimensions'] = {}
@@ -61,7 +61,9 @@ def pull(typ, keyword):
                                    {'$regex' : keyword, '$options' : 'i'}})
     elif typ != '' and keyword == '':
         result = db.Listings.find({'Type' : typ}) 
+
     
+
     return result
 
 def pullID(itemID):

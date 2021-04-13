@@ -5,7 +5,7 @@ class product():
         self.desc = description
         self.prodTyp = prodTyp
 
-class furntiture():
+class furniture():
     def __init__(self, typ, color, l, w, h, lbs):
         self.typ = typ
         self.color = color
