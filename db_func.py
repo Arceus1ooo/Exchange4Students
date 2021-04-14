@@ -11,6 +11,7 @@ def post(prod):
             "Price" : prod.price,
             "Description" : prod.desc,
             "Type" : prod.prodTyp,
+            "Image" : prod.image,
             "Product Details" : {}}
     
     if prod.prodTyp == "Book":
