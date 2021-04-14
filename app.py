@@ -64,7 +64,7 @@ def confirm():
             with open(os.path.join(app.config['UPLOAD_FOLDER'], filename), "rb") as img_file:
                 img_string = base64.b64encode(img_file.read()).decode('utf-8')
                 setattr(prod, 'image', img_string)
-                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         else:
             setattr(prod, 'image', '')
         
