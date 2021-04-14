@@ -5,22 +5,28 @@
 {%endblock%}
 
 {%block body%}
-<h1>{{item[0]['Name']}}</h1> <br>
-<p>Price: ${{item[0]['Price']}}</p> <br>
-<p>{{item[0]['Description']}}</p><br>
-<p><img src="data:image/jpeg;base64,{{ item[0]['Image'] }}" alt="img_data"  id="imgslot" class = "image-size"></p>
+<h1 class = "indent">{{item[0]['Name']}}</h1>
+<div class ="myImage">
+    <br>
+    <p><img src="data:image/jpeg;base64,{{ item[0]['Image'] }}" alt="img_data"  id="imgslot" class = "image-size-view image"></p>
+    <div class = "img-text">
+        
+        <p>Price: ${{item[0]['Price']}}</p>
+        <p>{{item[0]['Description']}}</p>
 
-{% for detail in item[0]['Product Details'] %}
 
-{% if detail == 'Dimensions' %}
-<p>Length: {{item[0]['Product Details']['Dimensions']['Length']}}</p>
-<p>Width: {{item[0]['Product Details']['Dimensions']['Width']}}</p>
-<p>Height: {{item[0]['Product Details']['Dimensions']['Height']}}</p><br>
+        {% for detail in item[0]['Product Details'] %}
 
-{% else %}
-<p>{{detail}}: {{item[0]['Product Details'][detail]}}</p> <br>
-{%endif%}
+        {% if detail == 'Dimensions' %}
+        <p>Length: {{item[0]['Product Details']['Dimensions']['Length']}}</p>
+        <p>Width: {{item[0]['Product Details']['Dimensions']['Width']}}</p>
+        <p>Height: {{item[0]['Product Details']['Dimensions']['Height']}}</p><br>
 
-{%endfor%}
+        {% else %}
+        <p>{{detail}}: {{item[0]['Product Details'][detail]}}</p> <br>
+        {%endif%}
 
+        {%endfor%}
+    </div>
+</div>
 {%endblock%}

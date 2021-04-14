@@ -12,8 +12,13 @@
 {%endblock%}
 
 {%block body%}
-<h1>Buyer Tab</h1>
-
+<div class = "list-margin">
+<h1>Browse Goods Here</h1>
+<p>Here is where you can <span class = "font-weight-bold">browse goods</span> that have been posted for sale.</p>
+<p>You can filter by type via the dropdown menu or search by keyword with the search bar.</p>
+<p>If you want to <span class = "font-weight-bold">view the full list</span>, make sure the filter is set to <span class = "font-weight-bold">"Any"</span> and that there are no keywords, then click <span class ="font-weight-bold">"Submit."</span></p>
+</div>
+<br>
 <form method="POST" action = "/itemlist">
 <!-- <input type="text" id="searchBar" onkeyup="searchProducts()" placeholder="Search Concept">
 <ul id="list">

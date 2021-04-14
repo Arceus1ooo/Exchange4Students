@@ -13,7 +13,10 @@
 
 {%block body%}
 <h1 class = "indent">Create a Listing</h1>
-
+<div class = "small-indent">
+<p>Below, please enter in information regarding your product.</p>
+<p>Please do not change the <span class = "font-weight-bold">"Product Type"</span> field.</p>
+</div>
 
 <form method="POST" action="/sell/post/confirmation" enctype="multipart/form-data">
 &emsp;Product Type: <input type='text' id='prodTyp' name='prodTyp' value="{{typ}}">
