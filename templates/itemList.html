@@ -27,6 +27,9 @@
 &emsp;<div>--------------------------------------------------------</div>
 </p>
 {% endfor %}
+{% if lst|length == 0 %}
+<h5>Sorry, there were no results for {{keyword}} in {{typ}}</h5>
+{%endif%}
 
 <a href="/buy"><input type="button" value="Return to Buyer Tab"></a>
 

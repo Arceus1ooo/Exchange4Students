@@ -60,9 +60,7 @@ def pull(typ, keyword):
         result = db.Listings.find({'Type' : typ, 'Description' : 
                                    {'$regex' : keyword, '$options' : 'i'}})
     elif typ != '' and keyword == '':
-        result = db.Listings.find({'Type' : typ}) 
-
-    
+        result = db.Listings.find({'Type' : typ})
 
     return result
 
