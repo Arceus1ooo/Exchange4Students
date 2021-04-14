@@ -15,7 +15,7 @@
 <h1 class = "indent">Create a Listing</h1>
 
 
-<form method="POST" action="/sell/post/confirmation">
+<form method="POST" action="/sell/post/confirmation" enctype="multipart/form-data">
 &emsp;Product Type: <input type='text' id='prodTyp' name='prodTyp' value="{{typ}}">
 <br>
 &emsp;Enter Product Name: <input type="text" id="name" name="name">
@@ -25,6 +25,9 @@
 <br>
 <br>
 &emsp;Enter Product Price: <input type="text" id="price" name="price">
+<br>
+<br>
+&emsp;Upload Product Image: <input type="file" name="img" accept="image/*">
 <br>
 <br>
 {% if typ == "Book" %}
