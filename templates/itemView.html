@@ -8,7 +8,7 @@
 <h1>{{item[0]['Name']}}</h1> <br>
 <p>Price: ${{item[0]['Price']}}</p> <br>
 <p>{{item[0]['Description']}}</p><br>
-<p><img src="data:image/jpeg;base64,{{ item[0]['Image'] }}" alt="img_data"  id="imgslot"></p>
+<p><img src="data:image/jpeg;base64,{{ item[0]['Image'] }}" alt="img_data"  id="imgslot" class = "image-size"></p>
 
 {% for detail in item[0]['Product Details'] %}
 

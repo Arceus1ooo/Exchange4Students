@@ -18,7 +18,7 @@
 <p>
 <br>
 &emsp;<span class = "list-background"><a href = '{{ url_for('displayItem', _id = item['_id'])}}'><div class = "list-name list-margin">{{item['Name']}}</div></div></a>
-&emsp;<img src="data:image/jpeg;base64,{{ item['Image'] }}" alt="img_data"  id="imgslot">
+&emsp;<img src="data:image/jpeg;base64,{{ item['Image'] }}" alt="img_data"  id="imgslot" class ="image-size">
 &emsp;&emsp;&emsp;&emsp; <div class = "list-margin">Price: ${{item['Price']}}</div>
 &emsp; <div class = "list-margin">Description: {{item['Description']}}</div>
 &emsp;<div class = "list-margin">Type of Product: {{item['Type']}}</div>
