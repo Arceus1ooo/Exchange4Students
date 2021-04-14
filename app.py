@@ -34,7 +34,7 @@ def displayListings():
     lst = []
     for x in res:
         lst.append(x)
-    return render_template('itemList.html', lst = lst)
+    return render_template('itemList.html', lst = lst, typ = typ, keyword = keyword)
 
 @app.route('/itemList/<string:_id>', methods = ['GET', 'POST'])
 def displayItem(_id):
