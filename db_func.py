@@ -52,18 +52,26 @@ def post(prod):
 
 
 def pull(typ, keyword):
-    if typ == 'Any' and keyword != '':
-        result = db.Listings.find({'Description' : 
-                                   {'$regex' : keyword, '$options' : 'i'}})
-    elif typ == 'Any' and keyword == '':
-        result = db.Listings.find({})
-    elif typ != '' and typ != 'Any' and keyword != '':
-        result = db.Listings.find({'Type' : typ, 'Description' : 
-                                   {'$regex' : keyword, '$options' : 'i'}})
-    elif typ != '' and keyword == '':
-        result = db.Listings.find({'Type' : typ})
 
-    return result
+    def pullHelper(typ, keyword, search):
+        if typ == 'Any' and keyword != '':
+            result = db.Listings.find({search : 
+                                    {'$regex' : keyword, '$options' : 'i'}})
+        elif typ == 'Any' and keyword == '':
+            result = db.Listings.find({})
+        elif typ != '' and typ != 'Any' and keyword != '':
+            result = db.Listings.find({'Type' : typ, search : 
+                                    {'$regex' : keyword, '$options' : 'i'}})
+        elif typ != '' and keyword == '':
+            result = db.Listings.find({'Type' : typ})
+
+        return result
+
+    res = pullHelper(typ, keyword, 'Name')
+    if res.count() == 0:
+        res = pullHelper(typ, keyword, 'Description')
+    
+    return res
 
 def pullID(itemID):
     '''returns item with specific itemID'''
