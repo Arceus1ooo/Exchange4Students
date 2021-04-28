@@ -101,10 +101,24 @@ def confirm():
             
     return render_template('confirmation.html', str_res = str_res)
 
-@app.route('/add-to-cart', methods = ['GET', 'POST'])
-def addToCart():
+@app.route('/login', methods = ['GET', 'POST'])
+def login():
     if request.method == 'POST':
-        product = request.form['objectID']
+        username = request.form['username']
+        password = request.form['password']
+        check = db_func.checkPassword(username, password)
+        if check:
+            return render_template('cart.html')
+    return render_template('login.html')
+
+@app.route('/create', methods = ['GET', 'POST'])
+def create():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        displayName = request.form['displayName']
+        db_func.createUser(username, password, displayName)
+    return render_template('create.html')
 
 
 if __name__ == '__main__':
