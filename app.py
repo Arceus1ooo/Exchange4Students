@@ -102,7 +102,7 @@ def confirm():
     return render_template('confirmation.html', str_res = str_res)
 
 @app.route('/add-to-cart', methods = ['GET', 'POST'])
-def addToCart:
+def addToCart():
     if request.method == 'POST':
         product = request.form['objectID']
 
