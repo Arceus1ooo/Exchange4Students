@@ -38,6 +38,8 @@ def displayListings():
 
 @app.route('/itemList/<string:_id>', methods = ['GET', 'POST'])
 def displayItem(_id):
+    if request.method == 'POST':
+        cartItem = request.form[objectID]
     item = db_func.pullID(_id)
     return render_template('itemView.html', item = item)
 
@@ -98,6 +100,11 @@ def confirm():
         str_res = str(res)
             
     return render_template('confirmation.html', str_res = str_res)
+
+@app.route('/add-to-cart', methods = ['GET', 'POST'])
+def addToCart:
+    if request.method == 'POST':
+        product = request.form['objectID']
 
 
 if __name__ == '__main__':

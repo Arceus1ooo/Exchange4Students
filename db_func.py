@@ -78,4 +78,9 @@ def pullID(itemID):
     return db.Listings.find({'_id': bson.ObjectId(oid=str(itemID))})
 
 
+def addToCart(itemID, email):
+    '''adds item to user's cart'''
+    item = pullID(itemID)
+    user = db.Users.find({'Email': email})
+
 client.close()
