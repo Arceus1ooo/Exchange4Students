@@ -28,5 +28,9 @@
 
         {%endfor%}
     </div>
+    <form action = '{{ url_for('displayItem', _id = item['_id'])}}' method="POST">
+        <input type = 'hidden' name = "objectID" value ='{{item[0]['_id']}}' />
+        <button type = 'submit'>Add To Cart</button>
+    </form>
 </div>
 {%endblock%}

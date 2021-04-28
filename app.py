@@ -38,6 +38,8 @@ def displayListings():
 
 @app.route('/itemList/<string:_id>', methods = ['GET', 'POST'])
 def displayItem(_id):
+    if request.method == 'POST':
+        cartItem = request.form['objectID']
     item = db_func.pullID(_id)
     return render_template('itemView.html', item = item)
 
@@ -98,6 +100,25 @@ def confirm():
         str_res = str(res)
             
     return render_template('confirmation.html', str_res = str_res)
+
+@app.route('/login', methods = ['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        check = db_func.checkPassword(username, password)
+        if check:
+            return render_template('cart.html')
+    return render_template('login.html')
+
+@app.route('/create', methods = ['GET', 'POST'])
+def create():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        displayName = request.form['displayName']
+        db_func.createUser(username, password, displayName)
+    return render_template('create.html')
 
 
 if __name__ == '__main__':

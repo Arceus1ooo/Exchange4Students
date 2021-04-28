@@ -78,4 +78,35 @@ def pullID(itemID):
     return db.Listings.find({'_id': bson.ObjectId(oid=str(itemID))})
 
 
+def addToCart(itemID, username):
+    '''adds item to user's cart'''
+    item = pullID(itemID)
+    user = searchUsers(username)
+
+def searchUsers(username):
+    '''searches for the user with the given username in the db'''
+    user = db.Users.find_one({'Username': username})
+    return user
+
+def checkPassword(username, password):
+    '''verifies password with username'''
+    user = searchUsers(username)
+    if user == None:
+        return False
+
+    if password == user['Password']:
+        return True
+    else:
+        return False
+
+def createUser(username, password, displayName):
+    user = {"Username" : username,
+            "Password" : password,
+            "Display Name" : displayName,
+            "Cart" : {},
+            "Listings" : {}
+            }
+
+    db.Users.insert_one(user)
+
 client.close()
