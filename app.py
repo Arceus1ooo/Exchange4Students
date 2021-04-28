@@ -39,7 +39,7 @@ def displayListings():
 @app.route('/itemList/<string:_id>', methods = ['GET', 'POST'])
 def displayItem(_id):
     if request.method == 'POST':
-        cartItem = request.form[objectID]
+        cartItem = request.form['objectID']
     item = db_func.pullID(_id)
     return render_template('itemView.html', item = item)
 
