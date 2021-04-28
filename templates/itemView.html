@@ -5,31 +5,31 @@
 {%endblock%}
 
 {%block body%}
-<h1 class = "indent">{{item[0]['Name']}}</h1>
+<h1 class = "indent">{{item['Name']}}</h1>
 <div class ="myImage">
     <br>
-    <p><img src="data:image/jpeg;base64,{{ item[0]['Image'] }}" alt="img_data"  id="imgslot" class = "image-size-view image"></p>
+    <p><img src="data:image/jpeg;base64,{{ item['Image'] }}" alt="img_data"  id="imgslot" class = "image-size-view image"></p>
     <div class = "img-text">
         
-        <p>Price: ${{item[0]['Price']}}</p>
-        <p>{{item[0]['Description']}}</p>
+        <p>Price: ${{item['Price']}}</p>
+        <p>{{item['Description']}}</p>
 
 
-        {% for detail in item[0]['Product Details'] %}
+        {% for detail in item['Product Details'] %}
 
         {% if detail == 'Dimensions' %}
-        <p>Length: {{item[0]['Product Details']['Dimensions']['Length']}}</p>
-        <p>Width: {{item[0]['Product Details']['Dimensions']['Width']}}</p>
-        <p>Height: {{item[0]['Product Details']['Dimensions']['Height']}}</p><br>
+        <p>Length: {{item['Product Details']['Dimensions']['Length']}}</p>
+        <p>Width: {{item['Product Details']['Dimensions']['Width']}}</p>
+        <p>Height: {{item['Product Details']['Dimensions']['Height']}}</p><br>
 
         {% else %}
-        <p>{{detail}}: {{item[0]['Product Details'][detail]}}</p> <br>
+        <p>{{detail}}: {{item['Product Details'][detail]}}</p> <br>
         {%endif%}
 
         {%endfor%}
     </div>
     <form action = '{{ url_for('displayItem', _id = item['_id'])}}' method="POST">
-        <input type = 'hidden' name = "objectID" value ='{{item[0]['_id']}}' />
+        <input type = 'hidden' name = "objectID" value ='{{item['_id']}}' />
         <button type = 'submit'>Add To Cart</button>
     </form>
 </div>

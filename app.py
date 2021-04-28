@@ -10,6 +10,9 @@ UPLOAD_FOLDER = os.getcwd()
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+global currentUser # the username of the user currently logged in
+currentUser = 'Tester'
+
 
 @app.route('/')
 def displayIndex():
@@ -38,8 +41,12 @@ def displayListings():
 
 @app.route('/itemList/<string:_id>', methods = ['GET', 'POST'])
 def displayItem(_id):
+    global currentUser
     if request.method == 'POST':
         cartItem = request.form['objectID']
+        db_func.addToCart(cartItem, currentUser)
+        user = db_func.findUser(currentUser)
+        return render_template('cart.html', cart=user['Cart'])
     item = db_func.pullID(_id)
     return render_template('itemView.html', item = item)
 
@@ -103,11 +110,13 @@ def confirm():
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
+    global currentUser
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         check = db_func.checkPassword(username, password)
         if check:
+            currentUser = username
             return render_template('cart.html')
     return render_template('login.html')
 
@@ -119,6 +128,12 @@ def create():
         displayName = request.form['displayName']
         db_func.createUser(username, password, displayName)
     return render_template('create.html')
+
+@app.route('/cart')
+def cart():
+    global currentUser
+    user = db_func.findUser(currentUser)
+    return render_template('cart.html', cart=user['Cart'])
 
 
 if __name__ == '__main__':

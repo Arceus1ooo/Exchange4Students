@@ -75,22 +75,16 @@ def pull(typ, keyword):
 
 def pullID(itemID):
     '''returns item with specific itemID'''
-    return db.Listings.find({'_id': bson.ObjectId(oid=str(itemID))})
+    return db.Listings.find_one({'_id': bson.ObjectId(oid=str(itemID))})
 
-
-def addToCart(itemID, username):
-    '''adds item to user's cart'''
-    item = pullID(itemID)
-    user = searchUsers(username)
-
-def searchUsers(username):
+def findUser(username):
     '''searches for the user with the given username in the db'''
     user = db.Users.find_one({'Username': username})
     return user
 
 def checkPassword(username, password):
     '''verifies password with username'''
-    user = searchUsers(username)
+    user = findUser(username)
     if user == None:
         return False
 
@@ -108,5 +102,17 @@ def createUser(username, password, displayName):
             }
 
     db.Users.insert_one(user)
+
+def addToCart(itemID, username):
+    user = findUser(username)
+    item = pullID(itemID)
+    items = []
+    for i in user['Cart']:
+        items.append(i)
+    items.append(item)
+
+    db.Users.update_one({"Username": username}, {"$set":{"Cart": items}})
+
+
 
 client.close()
