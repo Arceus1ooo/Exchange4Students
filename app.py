@@ -129,10 +129,14 @@ def create():
         db_func.createUser(username, password, displayName)
     return render_template('create.html')
 
-@app.route('/cart')
+@app.route('/cart', methods = ['Get', 'POST'])
 def cart():
     global currentUser
     user = db_func.findUser(currentUser)
+    if request.method == 'POST':
+        itemID = request.form['itemID']
+        cart = db_func.removeFromCart(itemID, currentUser)
+        return render_template('cart.html', cart=cart)
     return render_template('cart.html', cart=user['Cart'])
 
 

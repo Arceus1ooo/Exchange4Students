@@ -103,16 +103,24 @@ def createUser(username, password, displayName):
 
     db.Users.insert_one(user)
 
-def addToCart(itemID, username):
+def buildCart(username):
     user = findUser(username)
-    item = pullID(itemID)
     items = []
     for i in user['Cart']:
         items.append(i)
-    items.append(item)
+    return items
 
+def addToCart(itemID, username):
+    items = buildCart(username)
+    items.append(pullID(itemID))
     db.Users.update_one({"Username": username}, {"$set":{"Cart": items}})
 
+def removeFromCart(itemID, username):
+    items = buildCart(username)
+    if pullID(itemID) in items:
+        items.remove(pullID(itemID))
+    db.Users.update_one({"Username": username}, {"$set":{"Cart": items}})
+    return items
 
 
 client.close()

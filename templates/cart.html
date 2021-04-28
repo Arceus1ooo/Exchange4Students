@@ -7,5 +7,15 @@
 
 {% block body %}
 <h3>Your Cart</h3>
-{{cart}}
+{%for item in cart%}
+    <p>{{item['Name']}}</p>
+    <p><img src="data:image/jpeg;base64,{{ item['Image'] }}" alt="img_data"  id="imgslot" class = "image-size-view image"></p>
+    <p>Price: ${{item['Price']}}</p>
+    <p>{{item['Description']}}</p>
+    <form action='/cart', method = 'POST'>
+        <input type = 'hidden' name = "itemID" value ="{{item['_id']}}" />
+        <button type='submit'>Remove</button>
+    </form>
+    <br>
+{%endfor%}
 {% endblock %}
