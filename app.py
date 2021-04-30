@@ -20,15 +20,7 @@ def displayIndex():
 
 @app.route('/buy', methods = ['GET', 'POST'])
 def displayBuyerTab():
-    return render_template('buyerTab.html')
-
-@app.route('/sell', methods= ['GET', 'POST'])
-def displaySellerTab():
-    return render_template('sellerTab.html')
-
-@app.route('/itemlist', methods = ['GET', 'POST'])
-def displayListings():
-    typ = ''
+    typ = 'Any'
     keyword = ''
     if request.method == 'POST':
         typ = request.form['type']
@@ -37,9 +29,26 @@ def displayListings():
     lst = []
     for x in res:
         lst.append(x)
-    return render_template('itemList.html', lst = lst, typ = typ, keyword = keyword)
+    return render_template('buyerTab.html', lst = lst, typ = typ, keyword = keyword)
 
-@app.route('/itemList/<string:_id>', methods = ['GET', 'POST'])
+@app.route('/sell', methods= ['GET', 'POST'])
+def displaySellerTab():
+    return render_template('sellerTab.html')
+
+'''@app.route('/itemlist', methods = ['GET', 'POST'])
+def displayListings():
+    typ = 'Any'
+    keyword = ''
+    if request.method == 'POST':
+        typ = request.form['type']
+        keyword = request.form['choice']
+    res = db_func.pull(typ, keyword)
+    lst = []
+    for x in res:
+        lst.append(x)
+    return render_template('itemList.html', lst = lst, typ = typ, keyword = keyword)'''
+
+@app.route('/buy/<string:_id>', methods = ['GET', 'POST'])
 def displayItem(_id):
     global currentUser
     if request.method == 'POST':
