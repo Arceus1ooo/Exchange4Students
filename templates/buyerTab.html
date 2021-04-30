@@ -12,14 +12,15 @@
 {%endblock%}
 
 {%block body%}
-<div class = "list-margin">
+<div class = "list-margin"><center>
 <h1>Browse Goods Here</h1>
 <p>Here is where you can <span class = "font-weight-bold">browse goods</span> that have been posted for sale.</p>
 <p>You can filter by type via the dropdown menu or search by keyword with the search bar.</p>
 <p>If you want to <span class = "font-weight-bold">view the full list</span>, make sure the filter is set to <span class = "font-weight-bold">"Any"</span> and that there are no keywords, then click <span class ="font-weight-bold">"Submit."</span></p>
+</center>
 </div>
 <br>
-<form method="POST" action = "/itemlist">
+<form method="POST" action = "/buy"><center>
 <!-- <input type="text" id="searchBar" onkeyup="searchProducts()" placeholder="Search Concept">
 <ul id="list">
   <li class = 'products'>abProduct1</li>
@@ -29,8 +30,7 @@
   <li class = 'products'>efProduct5</li>
 </ul> ^ used for search testing-->
 
-
-<select id = "productList" onchange="dropDown()" name = "type">
+&emsp;<select id = "productList" onchange="dropDown()" name = "type">
     <option value = "Any">Any</option>
     <option value = "Electronic">Electronics</option>
     <option value = "Furniture">Furniture</option>
@@ -39,10 +39,39 @@
     <option value = "Clothing">Clothing</option>
 </select>
 
-<input type = "text" id = "choice" name = "choice" placeholder="Search Products"
+<input type = "text" id = "choice" name = "choice" placeholder="Search Products" style="width:400px"
 onkeydown="display(event)">
+
 <button type ="submit">Submit</button>
+</center>
 </form>
 <br><br>
-<a href="/"><input type="button" value="Return to Marketplace"></a>
+
+{% for item in lst %}
+<center>
+    <div class="container">
+        <div class = "card mt-5" style="width:800px">
+            <div class="row no-gutters">
+                <div class="col-sm-5">
+                    <a href = '{{ url_for('displayItem', _id = item['_id'])}}'>
+                    <img src="data:image/jpeg;base64,{{ item['Image'] }}" alt="img_data"  id="imgslot" class ="img-size-list card-img"></a>
+                </div>
+                <div class="col-sm-7">
+                    <div class = "card-body">
+                        &emsp;<a href = '{{ url_for('displayItem', _id = item['_id'])}}'><div class = "list-name list-margin product-name">{{item['Name']}}</div></a>
+                        &emsp;&emsp;&emsp;&emsp; <div class = "list-margin">Price: ${{item['Price']}}</div>
+                        &emsp; <div class = "list-margin">Description: {{item['Description']}}</div>
+                        &emsp;<div class = "list-margin">Type of Product: {{item['Type']}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</center>
+{% endfor %}
+{% if lst|length == 0 %}
+<h5><center>Sorry, there were no results for '{{keyword}}' in {{typ}}</center></h5>
+{%endif%}
+
+&emsp;<a href="/"><input type="button" value="Return to Marketplace"></a>
 {%endblock%}
