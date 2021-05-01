@@ -138,7 +138,7 @@ def create():
         db_func.createUser(username, password, displayName)
     return render_template('create.html')
 
-@app.route('/cart', methods = ['Get', 'POST'])
+@app.route('/cart', methods = ['GET', 'POST'])
 def cart():
     global currentUser
     user = db_func.findUser(currentUser)

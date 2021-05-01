@@ -12,19 +12,18 @@
 {%endblock%}
 
 {%block body%}
-<h1 class = "indent">Create a Listing</h1>
+<h1 class = "small-indent">Create a Listing</h1>
 <div class = "small-indent">
 <p>Below, please enter in information regarding your product.</p>
-<p>Please do not change the <span class = "font-weight-bold">"Product Type"</span> field.</p>
 </div>
 
 <form method="POST" action="/sell/post/confirmation" enctype="multipart/form-data">
-&emsp;Product Type: <input type='text' id='prodTyp' name='prodTyp' value="{{typ}}">
+&emsp;Product Type: <input type='text' class="form-control-sm" id='prodTyp' name='prodTyp' value="{{typ}}" readonly>
 <br>
 &emsp;Enter Product Name: <input type="text" id="name" name="name">
 <br>
 <br>
-&emsp;Enter Product Description: <input type="text" id="desc" name="desc">
+&emsp;Enter Product Description: <br>&emsp;<textarea class="form-control-sm" rows="3" id="desc" name="desc"></textarea>
 <br>
 <br>
 &emsp;Enter Product Price: <input type="text" id="price" name="price">
@@ -95,10 +94,11 @@
 
 {% endif %}
 
-<button type="submit">Submit to Marketplace</button>
+&emsp;<button type="submit">Submit to Marketplace</button>
 </form>
 <br>
 <br>
 &emsp;<a href="/sell"><input type="button" value="Return to Seller Tab"></a>
+<br><br>
 
 {%endblock%}
