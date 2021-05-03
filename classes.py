@@ -1,9 +1,10 @@
 class product():
-    def __init__(self, name, price, description, prodTyp):
+    def __init__(self, name, price, description, prodTyp, seller):
         self.name = name
         self.price = price
         self.desc = description
         self.prodTyp = prodTyp
+        self.seller = seller
 
 class furniture():
     def __init__(self, typ, color, l, w, h, lbs):

@@ -7,7 +7,8 @@ db = client.Exchange4Students
 
 def post(prod):
     
-    item = {"Name" : prod.name,
+    item = {"Seller" : prod.seller,
+            "Name" : prod.name,
             "Price" : prod.price,
             "Description" : prod.desc,
             "Type" : prod.prodTyp,
@@ -47,9 +48,13 @@ def post(prod):
         item['Product Details']['Weight'] = prod.weight
     
     res = db.Listings.insert_one(item)
+    addToListings(item['_id'], item['Seller'])
     return res
     
-
+"""def removeListing(itemID):
+    '''Removes a listing from listings db'''
+    db.Listings.update_one({"_id": bson.ObjectId(oid=str(itemID))}, {"$set":{"Image": ""}})"""
+    
 
 def pull(typ, keyword):
 
@@ -76,11 +81,22 @@ def pull(typ, keyword):
 def pullID(itemID):
     '''returns item with specific itemID'''
     return db.Listings.find_one({'_id': bson.ObjectId(oid=str(itemID))})
+    
 
 def findUser(username):
     '''searches for the user with the given username in the db'''
     user = db.Users.find_one({'Username': username})
     return user
+
+def createUser(username, password, displayName):
+    user = {"Username" : username,
+            "Password" : password,
+            "Display Name" : displayName,
+            "Cart" : {},
+            "Listings" : {}
+            }
+
+    db.Users.insert_one(user)
 
 def checkPassword(username, password):
     '''verifies password with username'''
@@ -93,30 +109,37 @@ def checkPassword(username, password):
     else:
         return False
 
-def createUser(username, password, displayName):
-    user = {"Username" : username,
-            "Password" : password,
-            "Display Name" : displayName,
-            "Cart" : {},
-            "Listings" : {}
-            }
-
-    db.Users.insert_one(user)
-
-def buildCart(username):
+def buildList(username, L):
+    '''used for building user cart and user listings'''
     user = findUser(username)
     items = []
-    for i in user['Cart']:
+    for i in user[L]:
         items.append(i)
     return items
 
+def addToListings(itemID, username):
+    '''adds item to user's cart or listings'''
+    items = buildList(username, 'Listings')
+    items.append(pullID(itemID))
+    db.Users.update_one({"Username": username}, {"$set":{"Listings": items}})
+
 def addToCart(itemID, username):
-    items = buildCart(username)
+    '''adds item to user's cart or listings'''
+    items = buildList(username, 'Cart')
     items.append(pullID(itemID))
     db.Users.update_one({"Username": username}, {"$set":{"Cart": items}})
 
+def removeFromListings(itemID, username):
+    '''removes item from user's cart or listings'''
+    items = buildList(username, 'Listings')
+    if pullID(itemID) in items:
+        items.remove(pullID(itemID))
+    db.Users.update_one({"Username": username}, {"$set":{"Listings": items}})
+    return items
+
 def removeFromCart(itemID, username):
-    items = buildCart(username)
+    '''removes item from user's cart or listings'''
+    items = buildList(username, 'Cart')
     if pullID(itemID) in items:
         items.remove(pullID(itemID))
     db.Users.update_one({"Username": username}, {"$set":{"Cart": items}})
