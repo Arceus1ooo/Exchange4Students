@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, redirect
 import db_func
 import classes
 from werkzeug.utils import secure_filename
@@ -18,6 +18,12 @@ currentUser = ''
 @app.route('/')
 def displayIndex():
     return render_template('index.html')
+    
+@app.route('/logout')
+def logout():
+    global currentUser
+    currentUser = ''
+    return redirect('/')
 
 @app.route('/buy', methods = ['GET', 'POST'])
 def displayBuyerTab():
@@ -55,7 +61,7 @@ def displayItem(_id):
     if request.method == 'POST': # user clicks add to cart
         cartItem = request.form['objectID']
         if currentUser == '':
-            return render_template('login.html')
+            return redirect('/login')
         db_func.addToCart(cartItem, currentUser)
         user = db_func.findUser(currentUser)
         return render_template('cart.html', cart=user['Cart'])
@@ -65,10 +71,13 @@ def displayItem(_id):
 
 @app.route('/sell/post', methods = ['GET', 'POST'])
 def postItem():
+    global currentUser
+    if currentUser == '':
+        return redirect('/login')
     err = False
     if request.method == 'POST':
         typ = request.form['type']
-    return render_template('postItem.html', typ = typ, err = err)
+    return render_template('postItem.html', typ = typ, err = err, user = currentUser)
 
 @app.route('/sell/post/confirmation', methods = ['GET', 'POST'])
 def confirm():
@@ -78,8 +87,9 @@ def confirm():
         name = request.form['name']
         desc = request.form['desc']
         price = request.form['price']
+        seller = request.form['seller']
         
-        prod = classes.product(name, price, desc, prodTyp)
+        prod = classes.product(name, price, desc, prodTyp, seller)
         
         image = request.files['img']
         if image.filename != '':
@@ -130,7 +140,7 @@ def confirm():
         return render_template('confirmation.html', conf = conf)
     else:
         err = True
-        return render_template("postItem.html", typ = prodTyp, err = err)
+        return render_template("postItem.html", typ = prodTyp, err = err, user=currentUser)
     
 
 @app.route('/login', methods = ['GET', 'POST'])
@@ -142,8 +152,16 @@ def login():
         check = db_func.checkPassword(username, password)
         if check:
             currentUser = username
-            return render_template('cart.html')
+            return redirect('/')
     return render_template('login.html')
+
+@app.route('/account', methods = ['GET', 'POST'])
+def viewAccount():
+    global currentUser
+    if currentUser == '':
+        return redirect('/login')
+    user = db_func.findUser(currentUser)
+    return render_template('account.html', user = user)
 
 @app.route('/create', methods = ['GET', 'POST'])
 def create():
@@ -152,17 +170,26 @@ def create():
         password = request.form['password']
         displayName = request.form['displayName']
         db_func.createUser(username, password, displayName)
+        return redirect('/')
     return render_template('create.html')
 
 @app.route('/cart', methods = ['GET', 'POST'])
 def cart():
     global currentUser
+    if currentUser == '':
+        return redirect('/login')
     user = db_func.findUser(currentUser)
     if request.method == 'POST':
         itemID = request.form['itemID']
         cart = db_func.removeFromCart(itemID, currentUser)
         return render_template('cart.html', cart=cart)
     return render_template('cart.html', cart=user['Cart'])
+
+"""@app.route('/r', methods = ['GET', 'POST'])
+def remove():
+    if request.method == 'POST':
+        db_func.removeListing(request.form['itemID'])
+        return render_template('index.html')"""
 
 
 if __name__ == '__main__':

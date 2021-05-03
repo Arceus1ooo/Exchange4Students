@@ -33,7 +33,7 @@
 &emsp;Enter Product Description: <br>&emsp;<textarea class="form-control-sm" rows="3" id="desc" name="desc"></textarea>
 <br>
 <br>
-&emsp;Enter Product Price: <input type="text" id="price" name="price">
+&emsp;Enter Product Price: $<input type="text" id="price" name="price">
 <br>
 <br>
 &emsp;Upload Product Image: <input type="file" name="img" accept="image/*">
@@ -102,6 +102,7 @@
 {% endif %}
 
 &emsp;<button type="submit">Submit to Marketplace</button>
+<input type='hidden' name='seller', value='{{user}}'/>
 </form>
 <br>
 <br>

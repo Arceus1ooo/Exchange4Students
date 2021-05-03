@@ -1,24 +1,20 @@
-<!--{% extends 'base.html' %}
+{% extends 'base.html' %}
+
 
 {% block head %}
-<style>
-    ul
-    {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
-</style>
-{%endblock%}
 
-{%block body%}
-<br>
-<h1 class = "indent"><center>Search Results</center></h1>
+{% endblock %}
 
-{% for item in lst %}
+{% block body %}
+
+<p>Username: {{user['Username']}}</p>
+<p>Display Name: {{user['Display Name']}}</p>
+<p>Listed Products: {{user['Listings']|length}}</p>
+
+{% for item in user['Listings'] %}
 <center>
     <div class="container">
-        <div class = "card mt-5" style="width:800px">
+        <div class = "card mt-5 border-primary rounded-lg" style="width:800px">
             <div class="row no-gutters">
                 <div class="col-sm-5">
                     <a href = '{{ url_for('displayItem', _id = item['_id'])}}'>
@@ -36,15 +32,6 @@
         </div>
     </div>
 </center>
-{% endfor %}
-{% if lst|length == 0 %}
-<h5>Sorry, there were no results for {{keyword}} in {{typ}}</h5>
-{%endif%}
-<br>
-<br>
-&emsp;<a href="/buy"><input type="button" value="Return to Buyer Tab"></a>
-<br>
-<br>
-
-{%endblock%}
--->
+{%endfor%}
+<button onclick="window.location.href = '/'">Home</button>
+{% endblock %}
