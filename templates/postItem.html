@@ -12,6 +12,13 @@
 {%endblock%}
 
 {%block body%}
+
+{% if err == True %}
+<div class="alert alert-danger">
+    <strong>Error!</strong> Re-enter your information.
+</div>
+{%endif%}
+
 <h1 class = "small-indent">Create a Listing</h1>
 <div class = "small-indent">
 <p>Below, please enter in information regarding your product.</p>

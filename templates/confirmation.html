@@ -7,7 +7,10 @@
 {%block body%}
 <h1 class = "indent">Confirmation</h1>
 
-<p class = "list-margin">&emsp;Confirmation Code: {{str_res}}</p>
-<br>
-&emsp;<a href="/sell"><input type="button" value="Return to Seller Tab"></a>
+<div class="jumbotron">
+<p class = "list-margin">&emsp;Confirmation Message: {{conf}}</p>
+<br><br>
+&emsp;<a href="/"><input type="button" value="Return to Home"></a>
+<br><br>
+</div>
 {% endblock %}
