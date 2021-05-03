@@ -50,7 +50,7 @@ onkeydown="display(event)">
 {% for item in lst %}
 <center>
     <div class="container">
-        <div class = "card mt-5" style="width:800px">
+        <div class = "card mt-5 border-primary rounded-lg" style="width:800px">
             <div class="row no-gutters">
                 <div class="col-sm-5">
                     <a href = '{{ url_for('displayItem', _id = item['_id'])}}'>
@@ -73,5 +73,7 @@ onkeydown="display(event)">
 <h5><center>Sorry, there were no results for '{{keyword}}' in {{typ}}</center></h5>
 {%endif%}
 
-&emsp;<a href="/"><input type="button" value="Return to Marketplace"></a>
+<br>
+<center><a href="/"><input type="button" value="Return to Marketplace"></a></center>
+<br><br>
 {%endblock%}

@@ -5,6 +5,7 @@ import classes
 from werkzeug.utils import secure_filename
 import base64
 from PIL import Image
+import os, binascii
 
 UPLOAD_FOLDER = os.getcwd()
 app = Flask(__name__)
@@ -61,12 +62,14 @@ def displayItem(_id):
 
 @app.route('/sell/post', methods = ['GET', 'POST'])
 def postItem():
+    err = False
     if request.method == 'POST':
         typ = request.form['type']
-    return render_template('postItem.html', typ = typ)
+    return render_template('postItem.html', typ = typ, err = err)
 
 @app.route('/sell/post/confirmation', methods = ['GET', 'POST'])
 def confirm():
+    str_res = ''
     if request.method == 'POST':
         prodTyp = request.form['prodTyp']
         name = request.form['name']
@@ -112,10 +115,20 @@ def confirm():
             setattr(prod, 'h', request.form['h'])
             setattr(prod, 'weight', request.form['weight'])
         
-        res = db_func.post(prod)
-        str_res = str(res)
-            
-    return render_template('confirmation.html', str_res = str_res)
+        if prod.name == '' or prod.price == '':
+            str_res = ''
+        else:
+            res = db_func.post(prod)
+            str_res = str(res)
+        
+    if str_res != '':
+        conf = binascii.b2a_hex(os.urandom(15))
+        conf = str(conf)
+        return render_template('confirmation.html', conf = conf)
+    else:
+        err = True
+        return render_template("postItem.html", typ = prodTyp, err = err)
+    
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -138,7 +151,7 @@ def create():
         db_func.createUser(username, password, displayName)
     return render_template('create.html')
 
-@app.route('/cart', methods = ['Get', 'POST'])
+@app.route('/cart', methods = ['GET', 'POST'])
 def cart():
     global currentUser
     user = db_func.findUser(currentUser)
