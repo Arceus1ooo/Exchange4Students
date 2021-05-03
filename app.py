@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash
 import db_func
 import classes
 from werkzeug.utils import secure_filename
@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 global currentUser # the username of the user currently logged in
-currentUser = 'Tester'
+currentUser = ''
 
 
 @app.route('/')
@@ -52,11 +52,14 @@ def displayListings():
 @app.route('/buy/<string:_id>', methods = ['GET', 'POST'])
 def displayItem(_id):
     global currentUser
-    if request.method == 'POST':
+    if request.method == 'POST': # user clicks add to cart
         cartItem = request.form['objectID']
+        if currentUser == '':
+            return render_template('login.html')
         db_func.addToCart(cartItem, currentUser)
         user = db_func.findUser(currentUser)
         return render_template('cart.html', cart=user['Cart'])
+
     item = db_func.pullID(_id)
     return render_template('itemView.html', item = item)
 
