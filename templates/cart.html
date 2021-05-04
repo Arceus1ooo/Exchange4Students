@@ -6,22 +6,41 @@
 {% endblock %}
 
 {% block body %}
-<h3>Your Cart</h3>
+<center><h3>Your Cart</h3></center>
 {%for item in cart%}
-    <p>{{item['Name']}}</p>
+<div class="container">
+    <div class = "card d-flex flex-column mt-5 border-danger rounded-lg">
+        <div class="row no-gutters">
+        
+            <div class="col-sm-5">
     <p><img src="data:image/jpeg;base64,{{ item['Image'] }}" alt="img_data"  id="imgslot" class = "image-size-view image"></p>
+        </div>
+    <div class="card-body">
+        <div class="col-sm-7">  
+            <br><br> <br> 
+    <p>{{item['Name']}}</p>
     <p>Price: ${{item['Price']}}</p>
     <p>{{item['Description']}}</p>
+
     <form action='/cart', method = 'POST'>
         <input type = 'hidden' name = "itemID" value ="{{item['_id']}}" />
-        <button type='submit'>Remove</button>
+        <button type='submit' class = "btn btn-danger right">Remove</button>
     </form>
     <br>
+</div>
+</div>
+</div>
+</div>
+</div>    
 {%endfor%}
 {%if cart|length > 0%}
+<br> <br>
+<center>
 <form action='/checkout', method='POST', enctype="multipart/form-data">
     <input name='cart' type='hidden' value='{{cart}}'/>
-    <button type='submit'>Proceed to Checkout</button>
+    <button type='submit' class = "btn btn-primary">Proceed to Checkout</button>
 </form>
+<br> <br>
+</center>
 {%endif%}
 {% endblock %}

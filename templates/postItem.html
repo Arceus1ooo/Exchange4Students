@@ -21,7 +21,7 @@
 
 <br> <br>
 
-<form class= "container">
+<div class= "container">
 <form method="POST" action="/sell/post/confirmation" enctype="multipart/form-data">
     <div class="form-group row">
 &emsp;<span class="col-sm-2 col-form-label">Product Type: </span> <input type='text' class="form-control-sm" id='prodTyp' name='prodTyp' value="{{typ}}" readonly>
@@ -111,7 +111,7 @@
 &emsp;<button type="submit" class = "btn btn-primary">Submit to Marketplace</button>
 <input type='hidden' name='seller', value='{{user}}'/>
 </form>
-</form>
+</div>
 <br>
 <br>
 &emsp;<a href="/sell"><input type="button" value="Return to Seller Tab" class = "btn btn-secondary"></a>
