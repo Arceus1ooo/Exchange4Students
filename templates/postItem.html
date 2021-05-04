@@ -19,94 +19,102 @@
 </div>
 {%endif%}
 
-<h1 class = "small-indent">Create a Listing</h1>
-<div class = "small-indent">
-<p>Below, please enter in information regarding your product.</p>
-</div>
+<br> <br>
 
+<form class= "container">
 <form method="POST" action="/sell/post/confirmation" enctype="multipart/form-data">
-&emsp;Product Type: <input type='text' class="form-control-sm" id='prodTyp' name='prodTyp' value="{{typ}}" readonly>
-<br>
-&emsp;Enter Product Name: <input type="text" id="name" name="name">
-<br>
-<br>
-&emsp;Enter Product Description: <br>&emsp;<textarea class="form-control-sm" rows="3" id="desc" name="desc"></textarea>
-<br>
-<br>
-&emsp;Enter Product Price: $<input type="text" id="price" name="price">
-<br>
-<br>
-&emsp;Upload Product Image: <input type="file" name="img" accept="image/*">
-<br>
-<br>
+    <div class="form-group row">
+&emsp;<span class="col-sm-2 col-form-label">Product Type: </span> <input type='text' class="form-control-sm" id='prodTyp' name='prodTyp' value="{{typ}}" readonly>
+    </div>
+<div class="form-group row">
+&emsp;<span class="col-sm-2 col-form-label">Enter Product Name: </span><input type="text" id="name" name="name">
+</div>
+<div class="form-group row">
+&emsp;<span class="col-sm-2 col-form-label">Enter Product Description: </span><br>&emsp;<textarea class="form-control-sm" rows="3" id="desc" name="desc"></textarea>
+</div>
+<div class="form-group row">
+&emsp;<span class="col-sm-2 col-form-label">Enter Product Price: $</span><input type="text" id="price" name="price">
+</div>
+<div class="form-group row">
+&emsp;<span class="col-sm-2 col-form-label">Upload Product Image: </span><input type="file" name="img" accept="image/*">
+</div>
 {% if typ == "Book" %}
-    &emsp;Enter Title: <input type="text" id="title" name="title">
-    <br>
-    <br>
-    &emsp;Enter Edition: <input type="text" id="ed" name="ed">
-    <br>
-    <br>
-    &emsp;Enter Course: <input type="text" id="course" name="course">
-    <br>
-    <br>
+<div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Enter Title: </span><input type="text" id="title" name="title">
+</div>
+    <div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Enter Edition: </span><input type="text" id="ed" name="ed">
+    </div>
+    <div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Enter Course: </span><input type="text" id="course" name="course">
+    </div>
 {% elif typ == "Sports Gear" %}
-    &emsp;Enter Type: <input type="text" id="kind" name="kind">
-    <br>
-    <br>
-    &emsp;Enter Weight: <input type="text" id="weight" name="weight">
-    <br>
-    <br>
+<div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Enter Type: </span><input type="text" id="kind" name="kind">
+</div>
+    <div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Enter Weight: </span><input type="text" id="weight" name="weight">
+    </div>
 {% elif typ == "Clothing" %}
-    &emsp;Enter Type: <input type="text" id="type" name="type">
-    <br>
-    <br>
-    &emsp;Enter Color: <input type="text" id="color" name="color">
-    <br>
-    <br>
-    &emsp;Enter Size: <input type="text" id="sz" name="sz">
-    <br>
-    <br>
+<div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Enter Type: </span><input type="text" id="type" name="type">
+</div>
+    <div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Enter Color: </span><input type="text" id="color" name="color">
+    </div>
+    <div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Enter Size: </span><input type="text" id="sz" name="sz">
+    </div>
 {% elif typ == "Electronic" %}
-    &emsp;Enter Type: <input type="text" id="type" name="type">
-    <br>
-    <br>
-    &emsp;Enter Model: <input type="text" id="model" name="model">
-    <br>
-    <br>
+<div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Enter Type: </span><input type="text" id="type" name="type">
+</div>
+    <div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Enter Model: </span><input type="text" id="model" name="model">
+    </div>
     &emsp;Enter Dimensions:<br>
-    &emsp;Length: <input type="text" id="l" name="l"><br>
-    &emsp;Width: <input type="text" id="w" name="w"><br>
-    &emsp;Height: <input type="text" id="h" name="h">
-    <br>
-    <br>
-    &emsp;Enter Weight: <input type="text" id="weight" name="weight">
-    <br>
-    <br>
+    <div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Length: </span><input type="text" id="l" name="l">
+    </div>
+    <div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Width: </span><input type="text" id="w" name="w">
+    </div>
+    <div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Height: </span><input type="text" id="h" name="h">
+    </div>
+    <div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Enter Weight: </span><input type="text" id="weight" name="weight">
+    </div>
 {% elif typ == "Furniture" %}
-    &emsp;Enter Type: <input type="text" id="type" name="type">
-    <br>
-    <br>
-    &emsp;Enter Color: <input type="text" id="color" name="color">
-    <br>
-    <br>
+<div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Enter Type: </span><input type="text" id="type" name="type">
+</div>
+    <div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Enter Color: </span><input type="text" id="color" name="color">
+    </div>
     &emsp;Enter Dimensions (Please include units):<br>
-    &emsp;Length: <input type="text" id="l" name="l"><br>
-    &emsp;Width: <input type="text" id="w" name="w"><br>
-    &emsp;Height: <input type="text" id="h" name="h">
-    <br>
-    <br>
-    &emsp;Enter Weight: <input type="text" id="weight" name="weight">
-    <br>
-    <br>
+    <div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Length: </span><input type="text" id="l" name="l">
+    </div>
+    <div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Width: </span><input type="text" id="w" name="w">
+    </div>
+    <div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Height: </span><input type="text" id="h" name="h">
+    </div>
+    <div class="form-group row">
+    &emsp;<span class="col-sm-2 col-form-label">Enter Weight: </span><input type="text" id="weight" name="weight">
+    </div>
 
 {% endif %}
 
-&emsp;<button type="submit">Submit to Marketplace</button>
+&emsp;<button type="submit" class = "btn btn-primary">Submit to Marketplace</button>
 <input type='hidden' name='seller', value='{{user}}'/>
+</form>
 </form>
 <br>
 <br>
-&emsp;<a href="/sell"><input type="button" value="Return to Seller Tab"></a>
+&emsp;<a href="/sell"><input type="button" value="Return to Seller Tab" class = "btn btn-secondary"></a>
 <br><br>
 
 {%endblock%}
