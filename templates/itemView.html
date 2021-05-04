@@ -5,30 +5,42 @@
 {%endblock%}
 
 {%block body%}
-<h1 class = "indent">{{item['Name']}}</h1>
-<div class ="myImage">
-    <br>
-    <p><img src="data:image/jpeg;base64,{{ item['Image'] }}" alt="img_data"  id="imgslot" class = "image-size-view image"></p>
-    <div class = "img-text">
+<div class="container">
+    <div class = "card p-5 mt-3 border-danger rounded-lg" style="width:1000px">
+        <div class="row no-gutters">
+            <div class="col-sm-5">
+                <a href = '{{ url_for('displayItem', _id = item['_id'])}}'>
+                <img src="data:image/jpeg;base64,{{ item['Image'] }}" alt="img_data"  id="imgslot" class ="img-size-list card-img"></a>
+            </div>
+            <div class="col-sm-7">
+                <div class = "card-body">
+                    <h1 class="mt-0">{{item['Name']}}</h1>
         
-        <p>Price: ${{item['Price']}}</p>
-        <p>{{item['Description']}}</p>
+                            <p>Price: ${{item['Price']}}
+                            &emsp;&emsp;&emsp;&emsp;&emsp;
+                            {{item['Description']}}</p>
 
 
-        {% for detail in item['Product Details'] %}
+                            {% for detail in item['Product Details'] %}
 
-        {% if detail == 'Dimensions' %}
-        <p>Length: {{item['Product Details']['Dimensions']['Length']}}</p>
-        <p>Width: {{item['Product Details']['Dimensions']['Width']}}</p>
-        <p>Height: {{item['Product Details']['Dimensions']['Height']}}</p><br>
+                            {% if detail == 'Dimensions' %}
+                            <p>Length: {{item['Product Details']['Dimensions']['Length']}}
+                            <br>Width: {{item['Product Details']['Dimensions']['Width']}}
+                            <br>Height: {{item['Product Details']['Dimensions']['Height']}}</p><br>
 
-        {% else %}
-        <p>{{detail}}: {{item['Product Details'][detail]}}</p> <br>
-        {%endif%}
-        {%endfor%}
-        <p>Seller: {{item['Seller']}}</p>
+                            {% else %}
+                            <p>{{detail}}: {{item['Product Details'][detail]}}</p>
+                            {%endif%}
+                            {%endfor%}
+                            <p>Seller: {{item['Seller']}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
 <br>
 <form action = '{{ url_for('displayItem', _id = item['_id'])}}' method="POST">
     <input type = 'hidden' name = "objectID" value ='{{item['_id']}}' />
