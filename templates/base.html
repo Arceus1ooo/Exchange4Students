@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>GAP's List</title>
     <link rel='shortcut icon' href='#'>
     <style>
@@ -83,7 +86,7 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-color navbar-dark">
         <a class = "navbar-brand" href = "/"><img src = "https://web.stevens.edu/news/newspoints/brand-logos/2020/Circular/Stevens-Circular-Logo-2020_4C.png" alt = "Stevens Logo" style = "width:50px;height:40px;"></a>
-        <div class = "collapse navbar-collapse" id = "navbarNav">
+        <div class="collapse navbar-collapse" id="navbarNav">  
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="/buy">Buy</a>
@@ -91,16 +94,28 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/sell">Sell</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/cart">View Cart</a>
-                </li>
-                <li class='nav-item'>
-                    <a class='nav-link' href='/account'>Account</a>
-                </li>
-                <li class='nav-item'>
-                    <a class='nav-link' href='/logout'>Logout</a>
-                </li>
             </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/account">Account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+                
+                <!--<div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Profile Info
+                    </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Account</a>
+                            <a class="dropdown-item" href="#">Logout</a>
+                        </div>
+                </div>
+        --></ul>
         </div>
       </nav>
     {% block body %} {% endblock %}
