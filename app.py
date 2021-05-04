@@ -76,6 +76,7 @@ def postItem():
     if currentUser == '':
         return redirect('/login')
     err = False
+    typ = '' # placeholder
     if request.method == 'POST':
         typ = request.form['type']
     return render_template('postItem.html', typ = typ, err = err, user = currentUser)
@@ -141,7 +142,7 @@ def confirm():
         return render_template('confirmation.html', conf = conf)
     else:
         err = True
-        return render_template("postItem.html", typ = prodTyp, err = err, user=currentUser)
+        return render_template("postItem.html", typ = prodTyp, err = err, user=db_func.findUser(currentUser))
     
 
 @app.route('/login', methods = ['GET', 'POST'])
@@ -198,12 +199,16 @@ def checkout():
     if request.method == 'POST':
         cart = request.form['cart']
         dictList = list(eval(cart))
-        temp = 'placeholder'
         for d in dictList:
+            db_func.removeFromCart(str(d['_id']), currentUser)
+            db_func.removeFromListings(str(d['_id']), currentUser)
             db_func.removeListing(d)
-            temp = db_func.removeFromCart(d['_id'], currentUser)
-        return render_template('order.html',cart=temp)
-    return redirect('/')
+        return render_template('order.html')
+    return redirect('/error')
+
+@app.route('/error')
+def error():
+    return render_template('error.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

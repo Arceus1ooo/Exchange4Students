@@ -83,8 +83,22 @@ def pull(typ, keyword):
     return res
 
 def pullID(itemID):
-    '''returns item with specific itemID'''
+    '''returns the item with specific itemID FROM LISTINGS DB'''
     return db.Listings.find_one({'_id': bson.ObjectId(oid=str(itemID))})
+
+def pullIDCart(itemID, username):
+    user = findUser(username)
+    cart = user['Cart']
+    for item in cart:
+        if str(item['_id']) == itemID:
+            return item
+
+def pullIDListing(itemID, username):
+    user = findUser(username)
+    listings = user['Listings']
+    for item in listings:
+        if str(item['_id']) == itemID:
+            return item
     
 
 def findUser(username):
@@ -114,38 +128,46 @@ def checkPassword(username, password):
         return False
 
 def buildCart(username):
-    '''used for building user cart and user listings'''
+    '''used for building user cart'''
     user = findUser(username)
     items = []
     for i in user['Cart']:
         items.append(i)
     return items
 
+def buildListings(username):
+    '''used for building user listings'''
+    user = findUser(username)
+    items = []
+    for i in user['Listings']:
+        items.append(i)
+    return items
+
 def addToListings(itemID, username):
-    '''adds item to user's cart or listings'''
+    '''adds item to user's listings'''
     items = buildCart(username) #'Listings')
     items.append(pullID(itemID))
     db.Users.update_one({"Username": username}, {"$set":{"Listings": items}})
 
 def addToCart(itemID, username):
-    '''adds item to user's cart or listings'''
+    '''adds item to user's cart'''
     items = buildCart(username)
     items.append(pullID(itemID))
     db.Users.update_one({"Username": username}, {"$set":{"Cart": items}})
 
 def removeFromListings(itemID, username):
-    '''removes item from user's cart or listings'''
+    '''removes item from user's listings'''
     items = buildCart(username) #'Listings')
-    if pullID(itemID) in items:
-        items.remove(pullID(itemID))
+    if pullIDListing(itemID, username) in items:
+        items.remove(pullIDListing(itemID, username))
     db.Users.update_one({"Username": username}, {"$set":{"Listings": items}})
-    return items
+    #return items
 
 def removeFromCart(itemID, username):
-    '''removes item from user's cart or listings'''
+    '''removes item from user's cart'''
     items = buildCart(username)
-    if pullID(itemID) in items:
-        items.remove(pullID(itemID))
+    if pullIDCart(itemID, username) in items:
+        items.remove(pullIDCart(itemID, username))
     db.Users.update_one({"Username": username}, {"$set":{"Cart": items}})
     return items
 
