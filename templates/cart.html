@@ -18,4 +18,10 @@
     </form>
     <br>
 {%endfor%}
+{%if cart|length > 0%}
+<form action='/checkout', method='POST', enctype="multipart/form-data">
+    <input name='cart' type='hidden' value='{{cart}}'/>
+    <button type='submit'>Proceed to Checkout</button>
+</form>
+{%endif%}
 {% endblock %}

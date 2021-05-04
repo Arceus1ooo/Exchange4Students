@@ -51,9 +51,13 @@ def post(prod):
     addToListings(item['_id'], item['Seller'])
     return res
     
-"""def removeListing(itemID):
-    '''Removes a listing from listings db'''
+"""def removeListingPicture(itemID):
+    '''Removes a listing's picture from listings db'''
     db.Listings.update_one({"_id": bson.ObjectId(oid=str(itemID))}, {"$set":{"Image": ""}})"""
+
+def removeListing(item):
+    '''removes listing from listing db'''
+    db.Listings.remove(item)
     
 
 def pull(typ, keyword):
@@ -109,29 +113,29 @@ def checkPassword(username, password):
     else:
         return False
 
-def buildList(username, L):
+def buildCart(username):
     '''used for building user cart and user listings'''
     user = findUser(username)
     items = []
-    for i in user[L]:
+    for i in user['Cart']:
         items.append(i)
     return items
 
 def addToListings(itemID, username):
     '''adds item to user's cart or listings'''
-    items = buildList(username, 'Listings')
+    items = buildCart(username) #'Listings')
     items.append(pullID(itemID))
     db.Users.update_one({"Username": username}, {"$set":{"Listings": items}})
 
 def addToCart(itemID, username):
     '''adds item to user's cart or listings'''
-    items = buildList(username, 'Cart')
+    items = buildCart(username)
     items.append(pullID(itemID))
     db.Users.update_one({"Username": username}, {"$set":{"Cart": items}})
 
 def removeFromListings(itemID, username):
     '''removes item from user's cart or listings'''
-    items = buildList(username, 'Listings')
+    items = buildCart(username) #'Listings')
     if pullID(itemID) in items:
         items.remove(pullID(itemID))
     db.Users.update_one({"Username": username}, {"$set":{"Listings": items}})
@@ -139,7 +143,7 @@ def removeFromListings(itemID, username):
 
 def removeFromCart(itemID, username):
     '''removes item from user's cart or listings'''
-    items = buildList(username, 'Cart')
+    items = buildCart(username)
     if pullID(itemID) in items:
         items.remove(pullID(itemID))
     db.Users.update_one({"Username": username}, {"$set":{"Cart": items}})

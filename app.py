@@ -6,13 +6,14 @@ from werkzeug.utils import secure_filename
 import base64
 from PIL import Image
 import os, binascii
+from bson.objectid import ObjectId
 
 UPLOAD_FOLDER = os.getcwd()
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 global currentUser # the username of the user currently logged in
-currentUser = ''
+currentUser = 'Tester'
 
 
 @app.route('/')
@@ -188,9 +189,21 @@ def cart():
 """@app.route('/r', methods = ['GET', 'POST'])
 def remove():
     if request.method == 'POST':
-        db_func.removeListing(request.form['itemID'])
+        db_func.removeListingPicture(request.form['itemID'])
         return render_template('index.html')"""
 
+@app.route('/checkout', methods=['GET','POST'])
+def checkout():
+    global currentUser
+    if request.method == 'POST':
+        cart = request.form['cart']
+        dictList = list(eval(cart))
+        temp = 'placeholder'
+        for d in dictList:
+            db_func.removeListing(d)
+            temp = db_func.removeFromCart(d['_id'], currentUser)
+        return render_template('order.html',cart=temp)
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)
