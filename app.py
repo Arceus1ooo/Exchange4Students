@@ -162,6 +162,12 @@ def viewAccount():
     global currentUser
     if currentUser == '':
         return redirect('/login')
+    if request.method == 'POST':
+        notif = request.form['notif']
+        notif = eval(notif)
+        db_func.removeNotifications(notif, currentUser)
+        user = db_func.findUser(currentUser)
+        return render_template('account.html', user = user)
     user = db_func.findUser(currentUser)
     return render_template('account.html', user = user)
 

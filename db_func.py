@@ -1,6 +1,7 @@
 import pymongo
 import classes
 import bson
+from datetime import datetime, date
 
 client = pymongo.MongoClient("mongodb+srv://dbAdmin:dbAdminPASS@cluster0.ih0la.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 db = client.Exchange4Students
@@ -194,7 +195,23 @@ def sendNotification(itemID, buyerName, sellerName):
     item = pullIDListing(itemID, sellerName)
 
     n = getNotifications(sellerName)
-    n.append(f"{buyerName} has bought {item['Name']} from you")
+
+    now = datetime.now()
+    now_str = now.strftime('%d/%m/%Y %H:%M:%S')
+
+    notif = {'Timestamp': now_str, 
+            'Message': f"{buyerName} has bought item: {item['Name']} from you"}
+
+    n.append(notif)
     db.Users.update_one({"Username": sellerName}, {"$set": {"Notifications": n}})
+
+def removeNotifications(notif, sellerName):
+    '''removes a notification from a seller's inbox'''
+    n = getNotifications(sellerName)
+    if notif in n:
+        n.remove(notif)
+    db.Users.update_one({"Username": sellerName}, {"$set": {"Notifications": n}})
+
+
 
 client.close()
