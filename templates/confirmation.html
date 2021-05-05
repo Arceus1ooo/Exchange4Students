@@ -5,24 +5,25 @@
 {%endblock%}
 
 {%block body%}
-<h1 class = "indent">Confirmation</h1>
 
 {% if typ == 'order' %}
 <div class="alert alert-success">
-    <strong>Order Successfully Placed!</strong> Thank you for your time.
+    <center><strong>Order Successfully Placed!</strong> Thank you for your time.</center>
 </div>
 {%endif%}
 
 {% if typ == 'sell' %}
 <div class="alert alert-success">
-    <strong>Item Successfully Posted to Marketplace!</strong> Thank you for your time.
+    <center><strong>Item Successfully Posted to Marketplace!</strong> Thank you for your time.</center>
 </div>
 {%endif%}
 
 <div class="jumbotron">
+<center>
 <p class = "list-margin">&emsp;Confirmation Message: {{conf}}</p>
 <br><br>
-&emsp;<a href="/"><input type="button" value="Return to Home"></a>
+&emsp;<a href="/"><input type="button" class="btn btn-secondary" value="Return to Marketplace"></a>
 <br><br>
+</center>
 </div>
 {% endblock %}

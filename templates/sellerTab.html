@@ -6,23 +6,29 @@
 
 {%block body%}
 <br> <br>
-<center><div class = "list-margin">
-<p>Click on the <span class = "font-weight-bold">dropdown menu</span> below to pick what kind of product you will be putting up for sale.</p>
-</div>
+<center><div class = "container"> <div class = "jumbotron">
+<h5>Click on the <span class = "font-weight-bold">dropdown menu</span> below to pick what kind of product you will be putting up for sale.</h5>
+
 <!--<input type = "text" id = "choice" placeholder="Search Your Products"
 onkeydown="display(event)"> -->
 <br>
 <form method= "POST" action="/sell/post">
-&emsp;Select a Type of product to post:
-<select id = "sellerProductList" onchange="dropDown()" name= "type">
-    <option value = "Furniture">Furniture</option>
-    <option value = "Book">Book</option>
-    <option value = "Sports Gear">Sports Gear</option>
-    <option value = "Clothing">Clothing</option>
-    <option value = "Electronic">Electronics</option>
-</select>
-<button type="submit">Post item to the Marketplace</button>
-</form>
+&emsp;<h5>Select a Type of product to post:</h5>
+<br><br>
+<center>
+    <div class="form-group">
+        &emsp;<select id = "sellerProductList" multiple class="form-control-lg" style="width:350px; height:160px" onchange="dropDown()" name = "type">
+            <option value = "Electronic">Electronics</option>
+            <option value = "Furniture">Furniture</option>
+            <option value = "Book">Book</option>
+            <option value = "Sports Gear">Sports Gear</option>
+            <option value = "Clothing">Clothing</option>
+        </select>
+        </div>
+</center>
 <br>
-&emsp;<a href="/"><input type="button" value="Return to Marketplace"></a></center>
+<button type="submit" class="btn btn-primary btn-lg">Post item to the Marketplace</button>
+</form>
+<br> <br>
+&emsp;<a href="/"><input type="button" class="btn btn-secondary btn-lg" value="Return to Marketplace"></a></div></div></center>
 {%endblock%}
