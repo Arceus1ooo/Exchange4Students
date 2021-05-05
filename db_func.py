@@ -152,7 +152,8 @@ def addToListings(itemID, username):
 def addToCart(itemID, username):
     '''adds item to user's cart'''
     items = buildCart(username)
-    items.append(pullID(itemID))
+    if pullID(itemID) not in items:
+        items.append(pullID(itemID))
     db.Users.update_one({"Username": username}, {"$set":{"Cart": items}})
 
 def removeFromListings(itemID, username):
