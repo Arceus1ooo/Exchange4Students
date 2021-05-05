@@ -6,6 +6,13 @@
 {% endblock %}
 
 {% block body %}
+
+{% if err == True %}
+<div class="alert alert-danger">
+    <strong>Error!</strong> Re-enter your information.
+</div>
+{%endif%}
+
 <div class="container p-3">
 <center>
     <div class="card">
@@ -45,7 +52,7 @@
 <center>
 <form action='/checkout', method='POST', enctype="multipart/form-data">
     <input name='cart' type='hidden' value='{{cart}}'/>
-    <button type='submit' class = "btn btn-primary">Proceed to Checkout</button>
+    <button type='submit' class = "btn btn-primary">Place Order</button>
 </form>
 <br> <br>
 </center>

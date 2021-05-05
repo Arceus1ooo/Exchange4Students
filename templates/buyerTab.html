@@ -12,11 +12,12 @@
 {%endblock%}
 
 {%block body%}
-<div class = "list-margin"><center>
-<p>Here is where you can <span class = "font-weight-bold">browse goods</span> that have been posted for sale.</p>
-<p>You can filter by type via the dropdown menu or search by keyword with the search bar.</p>
-<p>If you want to <span class = "font-weight-bold">view the full list</span>, make sure the filter is set to <span class = "font-weight-bold">"Any"</span> and that there are no keywords, then click <span class ="font-weight-bold">"Submit."</span></p>
+<div class = "container p-3"><div class="jumbotron"><center>
+<h5>Here is where you can <span class = "font-weight-bold">browse goods</span> that have been posted for sale.<br> <br>
+    You can filter by type via the dropdown menu or search by keyword with the search bar.<br> <br>
+    If you want to <span class = "font-weight-bold">view the full list</span>, make sure the filter is set to <span class = "font-weight-bold">"Any"</span> and that there are no keywords, then click <span class ="font-weight-bold">"Submit."</span></h5>
 </center>
+</div>
 </div>
 <br>
 <form method="POST" action = "/buy"><center>
@@ -29,7 +30,8 @@
   <li class = 'products'>efProduct5</li>
 </ul> ^ used for search testing-->
 
-&emsp;<select id = "productList" onchange="dropDown()" name = "type">
+<div class="form-group">
+&emsp;<select id = "productList" class="form-control-lg" onchange="dropDown()" name = "type">
     <option value = "Any">Any</option>
     <option value = "Electronic">Electronics</option>
     <option value = "Furniture">Furniture</option>
@@ -38,10 +40,12 @@
     <option value = "Clothing">Clothing</option>
 </select>
 
-<input type = "text" id = "choice" name = "choice" placeholder="Search Products" style="width:400px"
+<input type = "text" class="form-control-lg" id = "choice" name = "choice" placeholder="Search Products" style="width:400px"
 onkeydown="display(event)">
-
-<button type ="submit">Submit</button>
+</div>
+<div class="form-group">
+<button type ="submit" class="btn btn-outline-secondary btn-lg">Submit</button>
+</div>
 </center>
 </form>
 <br><br>
@@ -57,7 +61,7 @@ onkeydown="display(event)">
                 </div>
                 <div class="col-sm-7">
                     <div class = "card-body">
-                        &emsp;<a href = '{{ url_for('displayItem', _id = item['_id'])}}'><div class = "list-name list-margin product-name">{{item['Name']}}</div></a>
+                        &emsp;<a href = '{{ url_for('displayItem', _id = item['_id'])}}' class="text-danger"><div class = "list-name list-margin product-name">{{item['Name']}}</div></a>
                         &emsp;&emsp;&emsp;&emsp; <div class = "list-margin">Price: ${{item['Price']}}</div>
                         &emsp; <div class = "list-margin">Description: {{item['Description']}}</div>
                         &emsp;<div class = "list-margin">Type of Product: {{item['Type']}}</div>
@@ -77,6 +81,6 @@ onkeydown="display(event)">
 {%endif%}
 
 <br>
-<center><a href="/"><input type="button" value="Return to Marketplace"></a></center>
+<center><a href="/"><input type="button" class="btn btn-secondary" value="Return to Marketplace"></a></center>
 <br><br>
 {%endblock%}

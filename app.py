@@ -196,6 +196,7 @@ def remove():
 @app.route('/checkout', methods=['GET','POST'])
 def checkout():
     global currentUser
+    user = db_func.findUser(currentUser)
     if request.method == 'POST':
         cart = request.form['cart']
         dictList = list(eval(cart))
@@ -204,7 +205,7 @@ def checkout():
             db_func.removeFromListings(str(d['_id']), currentUser)
             db_func.removeListing(d)
         return render_template('order.html')
-    return redirect('/error')
+    return render_template('cart.html', cart = user['Cart'], err = True)
 
 @app.route('/error')
 def error():
