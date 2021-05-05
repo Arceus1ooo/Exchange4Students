@@ -20,7 +20,6 @@
     <div class="card">
         <h2>Notifications</h2>
 
-        <form action="/account" method="POST" enctype="multipart/form-data">
         <table class="table">
             <thead>
                 <tr>
@@ -35,14 +34,15 @@
                         <td>{{n['Timestamp']}}</td>
                         <td>{{n['Message']}}</td>
                         <td>
+                            <form action="/account" method="POST" enctype="multipart/form-data">
                             <input type = 'hidden' name = "notif" value ="{{n}}" />
                             <button type='submit' class='btn btn-danger text-white'>X</button>
+                            </form>
                         </td>
                     </tr>
                 {%endfor%}
               </tbody>
             </table>
-        </form>
     </div>
 </div></center>
 
