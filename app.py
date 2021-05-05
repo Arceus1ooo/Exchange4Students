@@ -167,11 +167,13 @@ def viewAccount():
 
 @app.route('/create', methods = ['GET', 'POST'])
 def create():
+    global currentUser
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         displayName = request.form['displayName']
         db_func.createUser(username, password, displayName)
+        currentUser = request.form['username']
         return redirect('/')
     return render_template('create.html')
 
@@ -195,14 +197,16 @@ def remove():
 
 @app.route('/checkout', methods=['GET','POST'])
 def checkout():
-    global currentUser
+    global currentUser # buyer POV
     user = db_func.findUser(currentUser)
     if request.method == 'POST':
         cart = request.form['cart']
         dictList = list(eval(cart))
         for d in dictList:
+            sellerName = db_func.getSellerName(str(d['_id']))
+            db_func.sendNotification(str(d['_id']), currentUser, sellerName)
             db_func.removeFromCart(str(d['_id']), currentUser)
-            db_func.removeFromListings(str(d['_id']), currentUser)
+            db_func.removeFromListings(str(d['_id']), sellerName)
             db_func.removeListing(d)
         return render_template('order.html')
     return render_template('cart.html', cart = user['Cart'], err = True)

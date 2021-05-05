@@ -12,7 +12,11 @@
 <p>Display Name: {{user['Display Name']}}</p>
 </center>
 <br> <br>
-<center><h2> Your Past/Current Listed Items: {{user['Listings']|length}}</h2></center>
+<h2>Notifications</h2>
+{% for n in user['Notifications'] %}
+<p>{{n}}</p>
+{%endfor%}
+<center><h2> Your Current Listed Items: {{user['Listings']|length}}</h2></center>
 
 {% for item in user['Listings'] %}
 <center>

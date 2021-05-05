@@ -83,10 +83,11 @@ def pull(typ, keyword):
     return res
 
 def pullID(itemID):
-    '''returns the item with specific itemID FROM LISTINGS DB'''
+    '''returns the item with specific itemID FROM LISTINGS DB, general POV'''
     return db.Listings.find_one({'_id': bson.ObjectId(oid=str(itemID))})
 
 def pullIDCart(itemID, username):
+    '''returns the item with specific itemID from user's cart, buyer POV'''
     user = findUser(username)
     cart = user['Cart']
     for item in cart:
@@ -94,6 +95,7 @@ def pullIDCart(itemID, username):
             return item
 
 def pullIDListing(itemID, username):
+    '''returns the item with specific itemID from user's listings, seller POV'''
     user = findUser(username)
     listings = user['Listings']
     for item in listings:
@@ -110,8 +112,9 @@ def createUser(username, password, displayName):
     user = {"Username" : username,
             "Password" : password,
             "Display Name" : displayName,
-            "Cart" : {},
-            "Listings" : {}
+            "Cart" : [],
+            "Listings" : [],
+            "Notifications": []
             }
 
     db.Users.insert_one(user)
@@ -145,7 +148,7 @@ def buildListings(username):
 
 def addToListings(itemID, username):
     '''adds item to user's listings'''
-    items = buildCart(username) #'Listings')
+    items = buildListings(username)
     items.append(pullID(itemID))
     db.Users.update_one({"Username": username}, {"$set":{"Listings": items}})
 
@@ -158,7 +161,7 @@ def addToCart(itemID, username):
 
 def removeFromListings(itemID, username):
     '''removes item from user's listings'''
-    items = buildCart(username) #'Listings')
+    items = buildListings(username)
     if pullIDListing(itemID, username) in items:
         items.remove(pullIDListing(itemID, username))
     db.Users.update_one({"Username": username}, {"$set":{"Listings": items}})
@@ -172,5 +175,26 @@ def removeFromCart(itemID, username):
     db.Users.update_one({"Username": username}, {"$set":{"Cart": items}})
     return items
 
+def getSellerName(itemID):
+    '''returns the seller name object given item id, used with buyer POV'''
+    item = pullID(itemID)
+    sellerName = item['Seller']
+    return sellerName
+
+def getNotifications(username):
+    '''builds the user's notification list'''
+    user = findUser(username)
+    n = []
+    for note in user['Notifications']:
+        n.append(note)
+    return n
+
+def sendNotification(itemID, buyerName, sellerName):
+    '''sends a notification to seller that buyer bought item from seller'''
+    item = pullIDListing(itemID, sellerName)
+
+    n = getNotifications(sellerName)
+    n.append(f"{buyerName} has bought {item['Name']} from you")
+    db.Users.update_one({"Username": sellerName}, {"$set": {"Notifications": n}})
 
 client.close()
