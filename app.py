@@ -68,7 +68,7 @@ def displayItem(_id):
         return render_template('cart.html', cart=user['Cart'])
 
     item = db_func.pullID(_id)
-    return render_template('itemView.html', item = item)
+    return render_template('itemView.html', item = item, user = currentUser)
 
 @app.route('/sell/post', methods = ['GET', 'POST'])
 def postItem():
@@ -139,7 +139,7 @@ def confirm():
     if str_res != '':
         conf = binascii.b2a_hex(os.urandom(15))
         conf = str(conf)
-        return render_template('confirmation.html', conf = conf)
+        return render_template('confirmation.html', typ = 'sell', conf = conf)
     else:
         err = True
         return render_template("postItem.html", typ = prodTyp, err = err, user=db_func.findUser(currentUser))
@@ -178,7 +178,10 @@ def create():
         username = request.form['username']
         password = request.form['password']
         displayName = request.form['displayName']
-        db_func.createUser(username, password, displayName)
+        if username != '' and password != '':
+            db_func.createUser(username, password, displayName)
+        else:
+            return render_template('create.html', err = True)
         currentUser = request.form['username']
         return redirect('/')
     return render_template('create.html')
@@ -214,7 +217,9 @@ def checkout():
             db_func.removeFromCart(str(d['_id']), currentUser)
             db_func.removeFromListings(str(d['_id']), sellerName)
             db_func.removeListing(d)
-        return render_template('order.html')
+        conf = binascii.b2a_hex(os.urandom(15))
+        conf = str(conf)
+        return render_template('confirmation.html', conf = conf, typ = 'order')
     return render_template('cart.html', cart = user['Cart'], err = True)
 
 @app.route('/error')
