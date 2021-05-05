@@ -7,21 +7,52 @@
 
 {% block body %}
 <center>
-<h2>Account Information</h2>
-<p>Username: {{user['Username']}}</p>
-<p>Display Name: {{user['Display Name']}}</p>
+<div class="container p-3">
+    <div class="card">
+        <h2>Account Information</h2>
+        <p>Username: {{user['Username']}}</p>
+        <p>Display Name: {{user['Display Name']}}</p>
+    </div>
+</div>
 </center>
 <br> <br>
-<h2>Notifications</h2>
-{% for n in user['Notifications'] %}
-<p>{{n}}</p>
-{%endfor%}
-<center><h2> Your Current Listed Items: {{user['Listings']|length}}</h2></center>
+<center><div class="container p-3">
+    <div class="card">
+        <h2>Notifications</h2>
+
+        <form action="/account" method="POST" enctype="multipart/form-data">
+        <table class="table">
+            <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Notification</th>
+                  <th>Remove</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for n in user['Notifications'] %}
+                    <tr>
+                        <td>{{n['Timestamp']}}</td>
+                        <td>{{n['Message']}}</td>
+                        <td>
+                            <input type = 'hidden' name = "notif" value ="{{n}}" />
+                            <button type='submit' class='btn btn-danger text-white'>X</button>
+                        </td>
+                    </tr>
+                {%endfor%}
+              </tbody>
+            </table>
+        </form>
+    </div>
+</div></center>
+
+
+<center><h2 class="text-danger"> Your Current Listed Items: {{user['Listings']|length}}</h2></center>
 
 {% for item in user['Listings'] %}
 <center>
     <div class="container">
-        <div class = "card mt-5 border-primary rounded-lg" style="width:800px">
+        <div class = "card mt-5 border-danger rounded-lg" style="width:800px">
             <div class="row no-gutters">
                 <div class="col-sm-5">
                     <!--<a href = '{{ url_for('displayItem', _id = item['_id'])}}'> -->
